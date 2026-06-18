@@ -1,0 +1,88 @@
+[project]
+name = "docintellect-rpa"
+version = "0.1.0"
+description = "Plataforma de RPA inteligente para processamento e extração de dados de documentos com OCR + NLP"
+requires-python = ">=3.12"
+license = "MIT"
+authors = [
+    { name = "docintellect-rpa" }
+]
+
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.32.0",
+    "pydantic>=2.10.0",
+    "pydantic-settings>=2.6.0",
+    "Pillow>=11.0.0",
+    "pymupdf>=1.24.0",
+    "python-multipart>=0.0.17",
+    "python-dotenv>=1.0.0",
+    "loguru>=0.7.0",
+    "httpx>=0.28.0",
+    "tenacity>=9.0.0",
+]
+
+[project.optional-dependencies]
+ocr = [
+    "pytesseract>=0.3.13",
+    "opencv-python-headless>=4.10.0",
+    "numpy>=1.26.0",
+]
+paddle = [
+    "paddlepaddle>=3.0.0",
+    "paddleocr>=2.9.0",
+]
+nlp = [
+    "spacy>=3.8.0",
+    "scikit-learn>=1.6.0",
+]
+llm = [
+    "openai>=1.55.0",
+]
+db = [
+    "sqlalchemy>=2.0.0",
+    "asyncpg>=0.30.0",
+    "alembic>=1.14.0",
+    "redis>=5.2.0",
+    "celery>=5.4.0",
+]
+cloud = [
+    "boto3>=1.35.0",
+]
+ui = [
+    "streamlit>=1.40.0",
+]
+dev = [
+    "pytest>=8.3.0",
+    "pytest-asyncio>=0.24.0",
+    "pytest-cov>=6.0.0",
+    "ruff>=0.7.0",
+    "mypy>=1.13.0",
+    "pre-commit>=4.0.0",
+]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP", "ANN", "ARG", "BLE", "C4", "DTZ", "EM", "ERA", "ISC", "LOG", "NPY", "PD", "PLE", "PLR", "PLW", "PT", "PTH", "RET", "RSE", "RUF", "SIM", "SLF", "SLOT", "TCH", "TID", "T10", "TRY", "UP", "YTT"]
+
+[tool.mypy]
+strict = true
+python_version = "3.12"
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_any_unimported = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+asyncio_mode = "auto"
+
+[tool.setuptools.packages.find]
+include = ["app*"]
+
+[build-system]
+requires = ["setuptools>=75.0"]
+build-backend = "setuptools.build_meta"
