@@ -118,4 +118,6 @@ app/
 
 ## Licença
 
-MIT
+Distribuído sob a licença MIT. Veja [LICENSE](LICENSE) para mais informações.
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
