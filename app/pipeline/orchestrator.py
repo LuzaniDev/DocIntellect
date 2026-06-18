@@ -4,6 +4,7 @@ from app.domain.document import DocumentStatus
 from app.domain.extraction import ExtractedField, ExtractionResult, StructuredBlock, StructuredTable
 from app.extractors.document_parser import BlockType, DocumentParser
 from app.extractors.smart_parse import SmartParser
+from app.extractors.text_formatter import MarkdownFormatter, TextCleaner
 from app.pipeline.stages.preprocessing import PreprocessingStage
 from app.pipeline.stages.ocr_stage import OCRStage
 from app.pipeline.stages.classification_stage import ClassificationStage
@@ -44,6 +45,11 @@ class PipelineOrchestrator:
         else:
             raise RuntimeError("Preprocessamento nao retornou texto nem imagens")
 
+        cleaned = TextCleaner.clean(raw_text)
+        if cleaned != raw_text:
+            logger.info(f"TextCleaner: {len(raw_text)} -> {len(cleaned)} chars")
+            raw_text = cleaned
+
         doc_type, class_confidence = await self.classification.run(raw_text)
         logger.info(f"Classificacao: {doc_type.value} ({class_confidence:.2f})")
 
@@ -79,7 +85,7 @@ class PipelineOrchestrator:
             for t in parsed.tables
         ]
 
-        formatted_md = self.smart_parser.heuristic.to_markdown(parsed)
+        formatted_md = MarkdownFormatter.format(parsed, raw_text)
 
         return ExtractionResult(
             document_type=doc_type.value,

@@ -81,6 +81,8 @@ Requer PostgreSQL + Redis rodando nos containers.
 3. Clique em **Processar** na barra lateral
 4. Visualize os campos extraídos, tabelas, pares chave-valor e texto bruto
 
+![Exemplo de processamento](docs/screenshot_1.png)
+
 ## API
 
 | Método | Rota | Descrição |
